@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fondo"
+        android:scaleType="fitXY"/>
+
+    <ImageView
+        android:id="@+id/mainTitle"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/titulo"
+        android:scaleType="fitXY"/>
+
+    <!-- Boton para ver el calendario con los entrenamientos -->
+    <Button
+        android:id="@+id/calendarioButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/mainTitle"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/circle_button"
+        android:textSize="12sp"
+        android:textColor="@color/mainButtonText"
+        android:textStyle="bold"
+        android:text="Calendario"
+        />
+
+    <!-- Boton para ver el perfil -->
+    <Button
+        android:id="@+id/perfilButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/mainTitle"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/circle_button"
+        android:textSize="12sp"
+        android:textColor="@color/mainButtonText"
+        android:textStyle="bold"
+        android:text="Perfil"
+        />
+
+    <!-- Boton para ver las rutinas disponibles y seleccionarlas -->
+    <Button
+        android:id="@+id/rutinasButton"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_below="@id/calendarioButton"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/circle_button"
+        android:textSize="22sp"
+        android:textColor="@color/mainButtonText"
+        android:textStyle="bold"
+        android:text="Rutinas"
+        />
+
+    <!-- Boton para iniciar una sesion de entrenamiento -->
+    <Button
+        android:id="@+id/inicioButton"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_below="@id/perfilButton"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/circle_button"
+        android:textSize="22sp"
+        android:textColor="@color/mainButtonText"
+        android:textStyle="bold"
+        android:text="Entrenar"
+        />
+</RelativeLayout>
