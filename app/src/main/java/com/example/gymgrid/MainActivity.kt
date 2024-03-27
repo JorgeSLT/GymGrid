@@ -27,19 +27,14 @@ class MainActivity : AppCompatActivity() {
 
         val currentDestinationId = navController.currentDestination?.id
 
-        // Que fragmento
-        when (currentDestinationId) {
-            R.id.homeFragment -> {
+        binding.startButton.setOnClickListener { _ ->
+            if(currentDestinationId == R.id.homeFragment){
                 navController.navigate(R.id.action_homeFragment_to_trainingFragment)
             }
-
-            R.id.trainingFragment -> {
+            else if(currentDestinationId == R.id.trainingFragment){
                 navController.navigate(R.id.action_trainingFragment_to_homeFragment)
             }
 
-            else -> {
-
-            }
         }
 
     }
