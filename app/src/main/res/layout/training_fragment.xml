@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <include layout="@layout/activity_main" />
-
     <ImageView
         android:id="@+id/curl"
         android:layout_width="match_parent"
