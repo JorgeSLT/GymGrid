@@ -6,26 +6,50 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/trainingFragment"
-        android:name="com.example.gymgrid.TrainingFragment"
-        android:label="Training"
-        tools:layout="@layout/training_fragment">
-
-        <action
-            android:id="@+id/action_trainingFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.gymgrid.HomeFragment"
         android:label="Home"
         tools:layout="@layout/home_fragment">
-        <action
-            android:id="@+id/action_homeFragment_to_trainingFragment"
-            app:destination="@id/trainingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.example.gymgrid.TrainingFragment"
+        android:label="Training"
+        tools:layout="@layout/training_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.gymgrid.CalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/calendar_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.gymgrid.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/profile_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/routineFragment"
+        android:name="com.example.gymgrid.RoutineFragment"
+        android:label="Routine"
+        tools:layout="@layout/routine_fragment">
     </fragment>
 
+
     <action
-        android:id="@+id/action_global_perfilFragment"
+        android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment" />
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment" />
+    <action
+        android:id="@+id/action_global_trainingFragment"
+        app:destination="@id/trainingFragment" />
+    <action
+        android:id="@+id/action_global_calendarFragment"
+        app:destination="@id/calendarFragment" />
+    <action
+        android:id="@+id/action_global_routineFragment"
+        app:destination="@id/routineFragment" />
 </navigation>

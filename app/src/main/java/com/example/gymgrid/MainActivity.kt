@@ -6,9 +6,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.gymgrid.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,20 +18,36 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar: Toolbar = binding.toolbar // Asumiendo que tienes un Toolbar en tu layout con el id 'toolbar'
+        val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false) // Oculta el título predeterminado de la ActionBar
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        // Configuración de la acción de los botones utilizando un método común
+        setupButtonActions()
+    }
+
+    private fun setupButtonActions() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
-        // Configuración de la acción del botón de inicio
-        binding.startButton.setOnClickListener { _ ->
-            val currentDestinationId = navController.currentDestination?.id
-            when (currentDestinationId) {
-                R.id.homeFragment -> navController.navigate(R.id.action_homeFragment_to_trainingFragment)
-                R.id.trainingFragment -> navController.navigate(R.id.action_trainingFragment_to_homeFragment)
-            }
+        binding.homeButton.setOnClickListener {
+            navigateToFragment(R.id.action_global_homeFragment)
         }
+
+        binding.startButton.setOnClickListener {
+            navigateToFragment(R.id.action_global_trainingFragment)
+        }
+
+        binding.calendarButton.setOnClickListener {
+            navigateToFragment(R.id.action_global_calendarFragment)
+        }
+
+        binding.routineButton.setOnClickListener {
+            navigateToFragment(R.id.action_global_routineFragment)
+        }
+    }
+
+    private fun navigateToFragment(actionId: Int) {
+        findNavController(R.id.nav_host_fragment_content_main).navigate(actionId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -43,15 +56,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.action_perfil -> {
-                val navController = findNavController(R.id.nav_host_fragment_content_main)
-
-                navController.navigate(R.id.action_global_perfilFragment)
-                return true
+                navigateToFragment(R.id.action_global_profileFragment)
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
-
 }
