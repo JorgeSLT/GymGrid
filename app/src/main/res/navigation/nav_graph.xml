@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/trainingFragment"
         android:name="com.example.gymgrid.TrainingFragment"
-        android:label="TrainingFragment"
+        android:label="Training"
         tools:layout="@layout/training_fragment">
 
         <action
@@ -18,10 +18,14 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.gymgrid.HomeFragment"
-        android:label="HomeFragment"
+        android:label="Home"
         tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
     </fragment>
+
+    <action
+        android:id="@+id/action_global_perfilFragment"
+        app:destination="@id/homeFragment" />
 </navigation>
