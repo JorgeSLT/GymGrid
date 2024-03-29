@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        // Configuración de la acción de los botones utilizando un método común
         setupButtonActions()
+        setupToolbarTitle()
     }
 
     private fun setupButtonActions() {
@@ -43,6 +43,23 @@ class MainActivity : AppCompatActivity() {
 
         binding.routineButton.setOnClickListener {
             navigateToFragment(R.id.action_global_routineFragment)
+        }
+    }
+
+    private fun setupToolbarTitle() {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val title = when (destination.id) {
+                R.id.homeFragment -> "Inicio"
+                R.id.trainingFragment -> "Entrenamiento"
+                R.id.calendarFragment -> "Calendario"
+                R.id.routineFragment -> "Rutina"
+                R.id.profileFragment -> "Perfil"
+
+                else -> "Título de Página"
+            }
+            binding.toolbarTitle.text = title
         }
     }
 
