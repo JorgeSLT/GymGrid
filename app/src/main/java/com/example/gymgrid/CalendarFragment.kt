@@ -25,6 +25,17 @@ class CalendarFragment : Fragment() {
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val currentDate = System.currentTimeMillis()
+        binding.calendarView.date = currentDate
+
+        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+        }
+    }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
