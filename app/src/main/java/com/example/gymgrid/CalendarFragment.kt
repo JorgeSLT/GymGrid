@@ -31,7 +31,7 @@ class CalendarFragment : Fragment() {
         val currentDate = System.currentTimeMillis()
         binding.calendarView.date = currentDate
 
-        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+        binding.calendarView.setOnDateChangeListener { _, _, _, _ ->
         }
     }
 
