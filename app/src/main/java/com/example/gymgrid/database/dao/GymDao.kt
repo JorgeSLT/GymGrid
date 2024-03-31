@@ -7,25 +7,27 @@ import com.example.gymgrid.database.entities.*
 @Dao
 interface GymDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertarRutina(rutina: Rutina)
+    fun insertarRutina(rutina: Rutina): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertarDia(dia: Dia)
+    fun insertarDia(dia: Dia): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertarEjercicio(ejercicio: Ejercicio)
+    fun insertarEjercicio(ejercicio: Ejercicio): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertarRutinaDiaRelacion(rutinaDiaRelacion: RutinaDiaRelacion)
+    fun insertarRutinaDiaRelacion(rutinaDiaRelacion: RutinaDiaRelacion)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertarDiaEjercicioRelacion(diaEjercicioRelacion: DiaEjercicioRelacion)
+    fun insertarDiaEjercicioRelacion(diaEjercicioRelacion: DiaEjercicioRelacion)
 
-    @Transaction
-    @Query("SELECT Dia.* FROM Dia INNER JOIN RutinaDiaRelacion ON Dia.diaId=RutinaDiaRelacion.diaId WHERE RutinaDiaRelacion.rutinaId=:rutinaId")
-    fun obtenerDiasParaRutina(rutinaId: Long): LiveData<List<Dia>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertarEjercicios(ejercicios: List<Ejercicio>): List<Long>
 
-    @Transaction
-    @Query("SELECT Ejercicio.* FROM Ejercicio INNER JOIN DiaEjercicioRelacion ON Ejercicio.ejercicioId=DiaEjercicioRelacion.ejercicioId WHERE DiaEjercicioRelacion.diaId=:diaId")
-    fun obtenerEjerciciosParaDia(diaId: Long): LiveData<List<Ejercicio>>
+    @Query("SELECT ejercicioId FROM Ejercicio WHERE titulo = :titulo")
+    fun obtenerIdEjercicioPorTitulo(titulo: String): Long
+
+    @Query("SELECT diaId FROM Dia WHERE nombreDia = :nombreDia")
+    fun obtenerIdDiaPorNombre(nombreDia: String): Long
+
 }

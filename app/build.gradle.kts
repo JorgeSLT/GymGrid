@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
     implementation(libs.androidx.core.ktx)
