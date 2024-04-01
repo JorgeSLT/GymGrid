@@ -28,7 +28,7 @@ class RoutineFragment : Fragment() {
     private fun cargarEjercicios() {
         val db = AppDatabase.getDatabase(requireContext())
         db.gymDao().obtenerTodosLosEjercicios().observe(viewLifecycleOwner) { ejercicios ->
-            binding.rvEjercicios.adapter = EjercicioAdapter(ejercicios)
+            binding.rvEjercicios.adapter = EjercicioAdapter(ejercicios, requireContext())
         }
     }
 

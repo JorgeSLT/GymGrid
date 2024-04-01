@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> "Inicio"
                 R.id.trainingFragment -> "Entrenamiento"
                 R.id.calendarFragment -> "Calendario"
-                R.id.routineFragment -> "Rutina"
+                R.id.routineFragment -> "Ejercicios"
                 else -> "GymGrid"
             }
             binding.toolbarTitle.text = title
