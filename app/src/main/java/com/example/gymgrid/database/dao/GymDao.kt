@@ -30,4 +30,7 @@ interface GymDao {
     @Query("SELECT diaId FROM Dia WHERE nombreDia = :nombreDia")
     fun obtenerIdDiaPorNombre(nombreDia: String): Long
 
+    @Query("SELECT * FROM Ejercicio")
+    fun obtenerTodosLosEjercicios(): LiveData<List<Ejercicio>>
+
 }

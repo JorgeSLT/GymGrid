@@ -10,4 +10,5 @@
     <color name="background">#E6E6E6</color>
     <color name="mainButton">#343961</color>
     <color name="secondaryButton">#9DA8D4</color>
+    <color name="lightText">#3B3D40</color>
 </resources>

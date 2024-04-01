@@ -17,6 +17,9 @@ import com.example.gymgrid.database.entities.Dia
 import com.example.gymgrid.database.entities.DiaEjercicioRelacion
 import com.example.gymgrid.database.entities.Rutina
 import com.example.gymgrid.database.entities.RutinaDiaRelacion
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         if (isFirstTime()) {
             askForUserName()
-            initializeDatabaseAndData(this.applicationContext)
+            lifecycleScope.launch(Dispatchers.IO) {
+                initializeDatabaseAndData(applicationContext)
+            }
         }
 
         setupButtonActions()
