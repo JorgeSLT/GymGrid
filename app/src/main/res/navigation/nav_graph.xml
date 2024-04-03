@@ -5,6 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <!-- Declaracion de los Fragments -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.gymgrid.HomeFragment"
@@ -36,7 +37,7 @@
         tools:layout="@layout/routine_fragment">
     </fragment>
 
-
+    <!-- Acciones globales para navegar por la app -->
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment" />

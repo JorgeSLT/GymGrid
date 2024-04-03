@@ -13,8 +13,6 @@ import com.example.gymgrid.databinding.ProfileFragmentBinding
 class ProfileFragment : Fragment() {
 
     private var _binding: ProfileFragmentBinding? = null
-
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -25,6 +23,7 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    //Una vez creada la vista se llamada a las multiples funciones para mostrar el perfil
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showUserName()
@@ -43,24 +42,28 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    //Obtiene el nombre de usuario desde sharedPreferences y lo muestra en la vista
     private fun showUserName() {
         val sharedPref = activity?.getSharedPreferences("userPreferences", Context.MODE_PRIVATE)
         val userName = sharedPref?.getString("USER_NAME", "Usuario Anónimo") ?: "Usuario Anónimo"
         binding.profileNameText.text = userName
     }
 
+    //Obtiene el objetivo del usuario desde sharedPreferences y lo muestra en la vista
     private fun showUserGoal() {
         val sharedPref = activity?.getSharedPreferences("userPreferences", Context.MODE_PRIVATE)
         val userName = sharedPref?.getString("FITNESS_GOAL", "Perder peso") ?: "Perder peso"
         binding.profileGoalText.text = userName
     }
 
+    //Obtiene la duracion de la rutina del usuario desde sharedPreferences y la muestra en la vista
     private fun showUserDays() {
         val sharedPref = activity?.getSharedPreferences("userPreferences", Context.MODE_PRIVATE)
         val userName = sharedPref?.getString("TRAINING_DAYS", "3 días") ?: "3 días"
         binding.profileDaysText.text = userName
     }
 
+    //Funciones para editar los distintos valores de un usuario y guardarlos de nuevo en sharedPreferences
     private fun editUserName() {
         val layoutInflater = LayoutInflater.from(context)
         val view = layoutInflater.inflate(R.layout.dialog_custom_layout, null)
@@ -139,8 +142,6 @@ class ProfileFragment : Fragment() {
             apply()
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

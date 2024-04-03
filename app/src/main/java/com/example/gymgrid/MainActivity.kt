@@ -21,20 +21,27 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+//Actividad principal que hereda de una AppCompatActivity
+//Usada especialmente por la facilidad que ofrece para usar la ActionBar
 class MainActivity : AppCompatActivity() {
 
+    //Acceso a la vista del archivo XML de manera segura
     private lateinit var binding: ActivityMainBinding
 
+    //Creacion de la actividad
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Obtiene el layout para ofrecerlo como vista
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Configura la ToolBar con las caracteristicas de la ActionBar
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        //Comprueba si es la primera vez que se abre la app para realizar una configuracion inicial
         if (isFirstTime()) {
             askForUserName()
             lifecycleScope.launch(Dispatchers.IO) {
@@ -46,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         setupToolbarTitle()
     }
 
+    //Funcion para configurar los listeners de los botones de la barra de navegacion inferior
+    //Cada boton usa el navegador para mostrar un Fragment diferente
     private fun setupButtonActions() {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-
         binding.homeButton.setOnClickListener {
             navigateToFragment(R.id.action_global_homeFragment)
         }
@@ -66,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Funcion para cambiar el titulo que aparece en la barra superior en funcion del Fragmente en el que nos encontremos
     private fun setupToolbarTitle() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
@@ -81,10 +89,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Funcion para navegar entre Fragments dado su id de accion
     private fun navigateToFragment(actionId: Int) {
         findNavController(R.id.nav_host_fragment_content_main).navigate(actionId)
     }
 
+    //Funciones sobreescritas para inflar y manejar las opciones del menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -100,6 +110,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Funcion para mostrar un dialogo donde se pregunta al usuario por su nombre
+    //Tras ser respondido, se guarda el nombre y se llama a askForFitnessGoal
     private fun askForUserName() {
         val layoutInflater = LayoutInflater.from(this)
         val view = layoutInflater.inflate(R.layout.dialog_custom_layout, null)
@@ -120,6 +132,7 @@ class MainActivity : AppCompatActivity() {
             .create().show()
     }
 
+    //Funcion para guardar el nombre de usuario en sharedPreferences
     private fun saveUserName(name: String) {
         val sharedPref = getSharedPreferences("userPreferences", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
@@ -129,6 +142,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Funcion para mostrar un dialogo donde se pregunta al usuario por su objetivo
+    //Tras ser respondido, se guarda el objetivo y se llama a askForTrainingDays
     private fun askForFitnessGoal() {
         val goals = arrayOf("Perder peso", "Ganar músculo")
         AlertDialog.Builder(this)
@@ -143,6 +158,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    //Funcion para guardar el objetivo del usuario en sharedPreferences
     private fun saveFitnessGoal(goal: String) {
         val sharedPref = getSharedPreferences("userPreferences", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
@@ -151,6 +167,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Funcion para mostrar un dialogo donde se pregunta al usuario por la duracion de su rutina
+    //Tras ser respondido, se guarda la duracion y se cierra el dialogo
     private fun askForTrainingDays() {
         val daysOptions = arrayOf("3 días", "5 días")
         AlertDialog.Builder(this)
@@ -164,6 +182,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    //Funcion para guardar la duracion de la rutina en sharedPreferences
     private fun saveTrainingDays(days: String) {
         val sharedPref = getSharedPreferences("userPreferences", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
@@ -172,11 +191,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Funcion para saber si es la primera vez que el usuario abre la app
+    //Se usa una simple variable en sharedPreferences
     private fun isFirstTime(): Boolean {
         val sharedPref = getSharedPreferences("userPreferences", Context.MODE_PRIVATE)
         return sharedPref.getBoolean("FIRST_TIME", true)
     }
 
+    //Inicializacion de la BBDD y llamada a los metodos para inicializar las clases
     private fun initializeDatabaseAndData(context: Context) {
         val db = AppDatabase.getDatabase(context)
         inicializarEjercicios(db)
@@ -185,6 +207,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //Funcion para inicializar los ejercicios
     private fun inicializarEjercicios(db: AppDatabase) {
         val ejercicios = listOf(
             Ejercicio(titulo = "Burpees", descripcion = "Una serie intensa de ejercicio que implica una combinación de flexiones y un salto vertical.", imagen = "burpees", tieneRepeticiones = true, repeticiones = 10),
@@ -202,8 +225,9 @@ class MainActivity : AppCompatActivity() {
         db.gymDao().insertarEjercicios(ejercicios)
     }
 
+    //Funcion para iniciarlizar los dias, asignando sus ejercicios
     private fun inicializarDiasYAsignarEjercicios(db: AppDatabase) {
-        // Definición de los días y los ejercicios asignados a cada uno
+        // Definicion de los dias y los ejercicios asignados a cada uno
         val asignacionesDiasEjercicios = listOf(
             listOf("Burpees", "Plancha", "Flexiones"),
             listOf("Rodillas al pecho", "Sentadilla", "Plancha"),
@@ -215,29 +239,53 @@ class MainActivity : AppCompatActivity() {
             listOf("Extensiones hombro", "Press banca", "Dominadas"),
         )
 
+        // Asignacion de los dias para cada dia de la semana
+        val diasSemana = mapOf(
+            1 to "Lunes",
+            2 to "Martes",
+            3 to "Miércoles",
+            4 to "Jueves",
+            5 to "Lunes",
+            6 to "Miércoles",
+            7 to "Jueves",
+            8 to "Viernes"
+        )
+
+        //No solo se crean objetos de tipo Dia, sino que tambien de tipo DiaEjercicioRelacion
         asignacionesDiasEjercicios.forEachIndexed { index, listaEjercicios ->
-            val diaId = db.gymDao().insertarDia(Dia(nombreDia = "Día ${index + 1}"))
+            val nombreDia = "Día ${index + 1}"
+            val diaSemana = diasSemana[index + 1] ?: "Lunes"
+            val dia = Dia(nombreDia = nombreDia, diaSemana = diaSemana)
+            val diaId = db.gymDao().insertarDia(dia)
             listaEjercicios.forEach { tituloEjercicio ->
                 val ejercicioId = db.gymDao().obtenerIdEjercicioPorTitulo(tituloEjercicio)
-                db.gymDao().insertarDiaEjercicioRelacion(DiaEjercicioRelacion(diaId = diaId, ejercicioId = ejercicioId))
+                if (ejercicioId != null) {
+                    db.gymDao().insertarDiaEjercicioRelacion(DiaEjercicioRelacion(diaId = diaId, ejercicioId = ejercicioId))
+                }
             }
         }
     }
 
+    //Funcion para inicializar rutinas y asignar sus dias
+    //Similar al funcionamiento de la inicializacion de los dias
     private fun inicializarRutinasYAsociarDias(db: AppDatabase) {
-        // Lista de rutinas y los nombres de los días asociados
         val rutinasYDias = listOf(
-            Triple("Rutina 3 días peso", "Rutina de 3 días para perder peso", listOf("Día 1", "Día 2", "Día 3")),
+            Triple("Rutina 3 días peso", "Rutina de 3 días para perder peso", listOf("Día 1", "Día 3", "Día 5")),
             Triple("Rutina 3 días músculo", "Rutina de 3 días para ganar musculo", listOf("Día 5", "Día 6", "Día 8")),
             Triple("Rutina 5 días peso", "Rutina de 5 días para perder peso", listOf("Día 1", "Día 2", "Día 3", "Día 4", "Día 8")),
             Triple("Rutina 5 días músculo", "Rutina de 5 días para ganar musculo", listOf("Día 2", "Día 5", "Día 6", "Día 7", "Día 8"))
         )
 
         rutinasYDias.forEach { (nombre, descripcion, nombresDias) ->
-            val rutinaId = db.gymDao().insertarRutina(Rutina(nombre = nombre, descripcion = descripcion))
+            val objetivo = if (nombre.contains("peso")) "perder_peso" else "ganar_musculo"
+            val duracionDias = if (nombre.contains("3 días")) 3 else 5
+            val rutina = Rutina(nombre = nombre, descripcion = descripcion, objetivo = objetivo, duracionDias = duracionDias)
+            val rutinaId = db.gymDao().insertarRutina(rutina)
             nombresDias.forEach { nombreDia ->
                 val diaId = db.gymDao().obtenerIdDiaPorNombre(nombreDia)
-                db.gymDao().insertarRutinaDiaRelacion(RutinaDiaRelacion(rutinaId = rutinaId, diaId = diaId))
+                if (diaId != null) {
+                    db.gymDao().insertarRutinaDiaRelacion(RutinaDiaRelacion(rutinaId = rutinaId, diaId = diaId))
+                }
             }
         }
     }
