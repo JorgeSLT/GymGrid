@@ -11,6 +11,5 @@ data class Ejercicio(
     val titulo: String,
     val descripcion: String,
     val imagen: String,
-    val tieneRepeticiones: Boolean,
     val repeticiones: Int?
 )

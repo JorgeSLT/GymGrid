@@ -4,13 +4,37 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <!-- Imagen de ejercicio -->
     <ImageView
-        android:id="@+id/curl"
+        android:id="@+id/imageViewEjercicio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="80dp"
         android:src="@drawable/curl"
-        />
+        android:visibility="gone" />
+
+    <!-- Botón de play -->
+    <Button
+        android:id="@+id/bigPlayButton"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/big_circle_button"
+        android:text="PLAY"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+
+    <!-- Mensaje de no rutina -->
+    <TextView
+        android:id="@+id/tvNoRutina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No hay rutina para hoy"
+        android:visibility="gone" />
 
 </RelativeLayout>

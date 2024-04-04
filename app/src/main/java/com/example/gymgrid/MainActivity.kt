@@ -210,17 +210,17 @@ class MainActivity : AppCompatActivity() {
     //Funcion para inicializar los ejercicios
     private fun inicializarEjercicios(db: AppDatabase) {
         val ejercicios = listOf(
-            Ejercicio(titulo = "Burpees", descripcion = "Una serie intensa de ejercicio que implica una combinación de flexiones y un salto vertical.", imagen = "burpees", tieneRepeticiones = true, repeticiones = 10),
-            Ejercicio(titulo = "Plancha", descripcion = "Ejercicio isométrico que se centra en fortalecer el core. Mantén tu cuerpo recto y elevado, apoyándote en tus codos y puntas de los pies.", imagen = "plancha", tieneRepeticiones = false, repeticiones = null),
-            Ejercicio(titulo = "Flexiones", descripcion = "Ejercicio básico de calistenia que trabaja pecho, hombros y tríceps. Baja tu cuerpo hacia el suelo con las manos al ancho de los hombros y empuja hacia arriba.", imagen = "flexiones", tieneRepeticiones = true, repeticiones = 15),
-            Ejercicio(titulo = "Rodillas al pecho", descripcion = "Ejercicio cardiovascular que implica llevar las rodillas hacia el pecho de forma alternada, ayudando a fortalecer el abdomen.", imagen = "rodillas", tieneRepeticiones = true, repeticiones = 20),
-            Ejercicio(titulo = "Sentadilla", descripcion = "Desde una posición de pie, flexiona las rodillas y baja el cuerpo como si te sentaras en una silla.", imagen = "sentadilla", tieneRepeticiones = true, repeticiones = 15),
-            Ejercicio(titulo = "Mountain climbers", descripcion = "En posición de plancha, alterna llevando cada rodilla hacia el pecho rápidamente.", imagen = "mountain", tieneRepeticiones = true, repeticiones = 20),
-            Ejercicio(titulo = "Extensiones hombro", descripcion = "Pueden realizarse con mancuernas, elevando los brazos lateralmente desde el cuerpo.", imagen = "hombro", tieneRepeticiones = true, repeticiones = 10),
-            Ejercicio(titulo = "Dominadas", descripcion = "Cuelga de una barra con las manos más anchas que los hombros y eleva tu cuerpo hasta que la barbilla supere la barra.", imagen = "dominadas", tieneRepeticiones = true, repeticiones = 8),
-            Ejercicio(titulo = "Fondos", descripcion = "Utilizando dos barras paralelas, baja tu cuerpo manteniendo los codos cerca del torso y luego empuja hacia arriba para levantarte.", imagen = "fondos", tieneRepeticiones = true, repeticiones = 10),
-            Ejercicio(titulo = "Flexiones en diamante", descripcion = "Coloca las manos juntas debajo del pecho formando un diamante con los dedos y realiza la flexión.", imagen = "diamante", tieneRepeticiones = true, repeticiones = 12),
-            Ejercicio(titulo = "Press banca", descripcion = "Acostado en una banca, levanta una barra desde el pecho hasta extender completamente los brazos.", imagen = "press", tieneRepeticiones = true, repeticiones = 12)
+            Ejercicio(titulo = "Burpees", descripcion = "Una serie intensa de ejercicio que implica una combinación de flexiones y un salto vertical.", imagen = "burpees", repeticiones = 10),
+            Ejercicio(titulo = "Plancha", descripcion = "Ejercicio isométrico que se centra en fortalecer el core. Mantén tu cuerpo recto y elevado, apoyándote en tus codos y puntas de los pies.", imagen = "plancha", repeticiones = 20),
+            Ejercicio(titulo = "Flexiones", descripcion = "Ejercicio básico de calistenia que trabaja pecho, hombros y tríceps. Baja tu cuerpo hacia el suelo con las manos al ancho de los hombros y empuja hacia arriba.", imagen = "flexiones", repeticiones = 15),
+            Ejercicio(titulo = "Rodillas al pecho", descripcion = "Ejercicio cardiovascular que implica llevar las rodillas hacia el pecho de forma alternada, ayudando a fortalecer el abdomen.", imagen = "rodillas", repeticiones = 20),
+            Ejercicio(titulo = "Sentadilla", descripcion = "Desde una posición de pie, flexiona las rodillas y baja el cuerpo como si te sentaras en una silla.", imagen = "sentadilla", repeticiones = 15),
+            Ejercicio(titulo = "Mountain climbers", descripcion = "En posición de plancha, alterna llevando cada rodilla hacia el pecho rápidamente.", imagen = "mountain", repeticiones = 20),
+            Ejercicio(titulo = "Extensiones hombro", descripcion = "Pueden realizarse con mancuernas, elevando los brazos lateralmente desde el cuerpo.", imagen = "hombro", repeticiones = 10),
+            Ejercicio(titulo = "Dominadas", descripcion = "Cuelga de una barra con las manos más anchas que los hombros y eleva tu cuerpo hasta que la barbilla supere la barra.", imagen = "dominadas", repeticiones = 8),
+            Ejercicio(titulo = "Fondos", descripcion = "Utilizando dos barras paralelas, baja tu cuerpo manteniendo los codos cerca del torso y luego empuja hacia arriba para levantarte.", imagen = "fondos", repeticiones = 10),
+            Ejercicio(titulo = "Flexiones en diamante", descripcion = "Coloca las manos juntas debajo del pecho formando un diamante con los dedos y realiza la flexión.", imagen = "diamante", repeticiones = 12),
+            Ejercicio(titulo = "Press banca", descripcion = "Acostado en una banca, levanta una barra desde el pecho hasta extender completamente los brazos.", imagen = "press", repeticiones = 12)
         )
         db.gymDao().insertarEjercicios(ejercicios)
     }
@@ -243,10 +243,10 @@ class MainActivity : AppCompatActivity() {
         val diasSemana = mapOf(
             1 to "Lunes",
             2 to "Martes",
-            3 to "Miércoles",
+            3 to "Miercoles",
             4 to "Jueves",
             5 to "Lunes",
-            6 to "Miércoles",
+            6 to "Miercoles",
             7 to "Jueves",
             8 to "Viernes"
         )
