@@ -1,6 +1,9 @@
 package com.example.gymgrid
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -20,6 +23,7 @@ import com.example.gymgrid.database.entities.RutinaDiaRelacion
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 //Actividad principal que hereda de una AppCompatActivity
 //Usada especialmente por la facilidad que ofrece para usar la ActionBar
@@ -190,6 +194,9 @@ class MainActivity : AppCompatActivity() {
             putString("TRAINING_DAYS", days)
             apply()
         }
+
+        // Programa las notificaciones
+        planificarNotificacionesPreferencias(days)
     }
 
     //Funcion para saber si es la primera vez que el usuario abre la app
@@ -198,6 +205,53 @@ class MainActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("userPreferences", Context.MODE_PRIVATE)
         return sharedPref.getBoolean("FIRST_TIME", true)
     }
+
+    private fun planificarNotificacionesPreferencias(days: String) {
+        //Llamada a la funcion para cancelar notificaciones programadas previamente
+        cancelarNotificaciones()
+
+        val daysOfWeek = if (days.startsWith("3")) {
+            listOf(Calendar.MONDAY, Calendar.WEDNESDAY, Calendar.FRIDAY)
+        } else {
+            listOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY)
+        }
+
+        daysOfWeek.forEach { dayOfWeek ->
+            planificarNotificacionesDia(dayOfWeek)
+
+        }
+    }
+
+    private fun planificarNotificacionesDia(dayOfWeek: Int) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, dayOfWeek, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val calendar = Calendar.getInstance().apply {
+            //Programada para el dia dado a las 9:00 AM
+            set(Calendar.DAY_OF_WEEK, dayOfWeek)
+            set(Calendar.HOUR_OF_DAY, 9)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            if (before(Calendar.getInstance())) {
+                // Si es un dia pasado de la semana actual, se programa para la siguiente semana
+                add(Calendar.WEEK_OF_YEAR, 1)
+            }
+        }
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY * 7, pendingIntent)
+    }
+
+    //Funcion para cancelar todas las notificaciones programadas previamente
+    private fun cancelarNotificaciones() {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        (Calendar.MONDAY..Calendar.FRIDAY).forEach { dayOfWeek ->
+            val intent = Intent(this, NotificationReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(this, dayOfWeek, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            alarmManager.cancel(pendingIntent)
+        }
+    }
+
 
     //Inicializacion de la BBDD y llamada a los metodos para inicializar las clases
     private fun initializeDatabaseAndData(context: Context) {

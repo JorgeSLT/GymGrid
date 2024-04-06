@@ -1,6 +1,9 @@
 package com.example.gymgrid
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +12,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.gymgrid.databinding.ProfileFragmentBinding
+import java.util.Calendar
 
 class ProfileFragment : Fragment() {
 
@@ -141,7 +145,57 @@ class ProfileFragment : Fragment() {
             putString("TRAINING_DAYS", days)
             apply()
         }
+
+        planificarNotificacionesPreferencias(days)
     }
+
+    private fun planificarNotificacionesPreferencias(days: String) {
+        //Llamada a la funcion para cancelar notificaciones programadas previamente
+        cancelarNotificaciones()
+
+        val calendario = Calendar.getInstance()
+        val hoy = calendario.get(Calendar.DAY_OF_WEEK)
+        val daysOfWeek = if (days.startsWith("3")) {
+            listOf(Calendar.MONDAY, Calendar.WEDNESDAY, Calendar.FRIDAY)
+        } else {
+            listOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY)
+        }
+
+        daysOfWeek.forEach { dayOfWeek ->
+            //Evitar programar dias pasados
+            if (dayOfWeek >= hoy) {
+                planificarNotificacionesDia(dayOfWeek)
+            }
+        }
+    }
+
+    private fun planificarNotificacionesDia(dayOfWeek: Int) {
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(requireContext(), NotificationReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(requireContext(), dayOfWeek, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.DAY_OF_WEEK, dayOfWeek)
+            set(Calendar.HOUR_OF_DAY, 9)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            if (before(Calendar.getInstance())) {
+                add(Calendar.WEEK_OF_YEAR, 1)
+            }
+        }
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY * 7, pendingIntent)
+    }
+
+    private fun cancelarNotificaciones() {
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        (Calendar.MONDAY..Calendar.FRIDAY).forEach { dayOfWeek ->
+            val intent = Intent(requireContext(), NotificationReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(requireContext(), dayOfWeek, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            alarmManager.cancel(pendingIntent)
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
