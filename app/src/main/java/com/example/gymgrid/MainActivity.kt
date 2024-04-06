@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.trainingFragment -> "Entrenamiento"
                 R.id.calendarFragment -> "Calendario"
                 R.id.routineFragment -> "Ejercicios"
+                R.id.introFragment -> "Rutinas disponibles"
                 else -> "GymGrid"
             }
             binding.toolbarTitle.text = title
@@ -229,14 +230,14 @@ class MainActivity : AppCompatActivity() {
     private fun inicializarDiasYAsignarEjercicios(db: AppDatabase) {
         // Definicion de los dias y los ejercicios asignados a cada uno
         val asignacionesDiasEjercicios = listOf(
-            listOf("Burpees", "Plancha", "Flexiones"),
-            listOf("Rodillas al pecho", "Sentadilla", "Plancha"),
-            listOf("Flexiones", "Mountain climbers", "Burpees"),
-            listOf("Mountain climbers", "Flexiones", "Sentadilla"),
-            listOf("Flexiones", "Extensiones hombro", "Sentadilla"),
-            listOf("Dominadas", "Fondos", "Flexiones en diamante"),
-            listOf("Sentadilla", "Press banca", "Dominadas"),
-            listOf("Extensiones hombro", "Press banca", "Dominadas"),
+            listOf("Burpees", "Plancha", "Flexiones"),                      //Dia 1 - Lunes
+            listOf("Rodillas al pecho", "Sentadilla", "Plancha"),           //Dia 2 - Martes
+            listOf("Flexiones", "Mountain climbers", "Burpees"),            //Dia 3 - Miercoles
+            listOf("Mountain climbers", "Flexiones", "Sentadilla"),         //Dia 4 - Jueves
+            listOf("Flexiones", "Extensiones hombro", "Sentadilla"),        //Dia 5 - Lunes
+            listOf("Dominadas", "Fondos", "Flexiones en diamante"),         //Dia 6 - Miercoles
+            listOf("Sentadilla", "Press banca", "Dominadas"),               //Dia 7 - Jueves
+            listOf("Extensiones hombro", "Press banca", "Dominadas"),       //Dia 8 - Viernes
         )
 
         // Asignacion de los dias para cada dia de la semana
@@ -270,10 +271,10 @@ class MainActivity : AppCompatActivity() {
     //Similar al funcionamiento de la inicializacion de los dias
     private fun inicializarRutinasYAsociarDias(db: AppDatabase) {
         val rutinasYDias = listOf(
-            Triple("Rutina 3 días peso", "Rutina de 3 días para perder peso", listOf("Día 1", "Día 3", "Día 5")),
+            Triple("Rutina 3 días peso", "Rutina de 3 días para perder peso", listOf("Día 1", "Día 3", "Día 8")),
             Triple("Rutina 3 días músculo", "Rutina de 3 días para ganar musculo", listOf("Día 5", "Día 6", "Día 8")),
             Triple("Rutina 5 días peso", "Rutina de 5 días para perder peso", listOf("Día 1", "Día 2", "Día 3", "Día 4", "Día 8")),
-            Triple("Rutina 5 días músculo", "Rutina de 5 días para ganar musculo", listOf("Día 2", "Día 5", "Día 6", "Día 7", "Día 8"))
+            Triple("Rutina 5 días músculo", "Rutina de 5 días para ganar musculo", listOf("Día 5", "Día 2", "Día 6", "Día 7", "Día 8"))
         )
 
         rutinasYDias.forEach { (nombre, descripcion, nombresDias) ->

@@ -60,4 +60,8 @@ interface GymDao {
     //Realiza una consulta para obtener una lista de objetos DiaConEjercicios para una rutina dado su id
     @Query("""SELECT * FROM Dia INNER JOIN RutinaDiaRelacion ON Dia.diaId = RutinaDiaRelacion.diaId WHERE RutinaDiaRelacion.rutinaId = :rutinaId""")
     fun obtenerDiasConEjerciciosPorRutinaId(rutinaId: Long): LiveData<List<DiaConEjercicios>>
+
+    //Realiza una consulta para obtener todas las rutinas guardadas
+    @Query("SELECT * FROM Rutina")
+    fun obtenerTodasLasRutinas(): LiveData<List<Rutina>>
 }

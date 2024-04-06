@@ -36,6 +36,12 @@
         android:label="Routine"
         tools:layout="@layout/routine_fragment">
     </fragment>
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.example.gymgrid.IntroFragment"
+        android:label="Intro"
+        tools:layout="@layout/intro_fragment">
+    </fragment>
 
     <!-- Acciones globales para navegar por la app -->
     <action
@@ -53,4 +59,7 @@
     <action
         android:id="@+id/action_global_routineFragment"
         app:destination="@id/routineFragment" />
+    <action
+        android:id="@+id/action_global_introFragment"
+        app:destination="@id/introFragment" />
 </navigation>
