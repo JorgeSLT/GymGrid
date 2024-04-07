@@ -153,8 +153,6 @@ class ProfileFragment : Fragment() {
         //Llamada a la funcion para cancelar notificaciones programadas previamente
         cancelarNotificaciones()
 
-        val calendario = Calendar.getInstance()
-        val hoy = calendario.get(Calendar.DAY_OF_WEEK)
         val daysOfWeek = if (days.startsWith("3")) {
             listOf(Calendar.MONDAY, Calendar.WEDNESDAY, Calendar.FRIDAY)
         } else {
@@ -163,9 +161,7 @@ class ProfileFragment : Fragment() {
 
         daysOfWeek.forEach { dayOfWeek ->
             //Evitar programar dias pasados
-            if (dayOfWeek >= hoy) {
-                planificarNotificacionesDia(dayOfWeek)
-            }
+            planificarNotificacionesDia(dayOfWeek)
         }
     }
 
